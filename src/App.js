@@ -1,25 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import "./App.css";
+import Footer from "./Components/Footer/Footer";
+import Header from "./Components/Header/Header";
+import Home from "./Components/Pages/Home/Home";
+import Quiz from "./Components/Pages/Quiz/Quiz";
+import Result from "./Components/Pages/Result/Result";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <BrowserRouter>
+            <div className="app" style={{ backgroundImage: "url(./ques1.png" }}>
+                <Header />
+                <Routes>
+                    <Route path="/" element={<Home />}></Route>
+                    <Route path="quiz" element={<Quiz />}></Route>
+                    <Route path="result" element={<Result />}></Route>
+                </Routes>
+            </div>
+            <Footer />
+        </BrowserRouter>
+    );
 }
 
 export default App;
