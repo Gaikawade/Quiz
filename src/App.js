@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
@@ -8,13 +9,18 @@ import Quiz from "./Pages/Quiz/Quiz";
 import Result from "./Pages/Result/Result";
 
 function App() {
-    const [ name, setName ] = useState("");
+    const [name, setName] = useState("");
     const [questions, setQuestions] = useState();
     const [score, setScore] = useState(0);
-    
 
-    const fetchQuestions = () => {
-        
+    const fetchQuestions = async (category = "", difficulty = "") => {
+        const { data } = await axios.get(
+            `https://opentdb.com/api.php?amount=10${
+                category && `&category=${category}`
+            }${difficulty && `&diffuculty=${difficulty}`}&type=multiple`
+        );
+        console.log(data);
+        setQuestions(data.results);
     };
 
     return (
@@ -32,7 +38,18 @@ function App() {
                             />
                         }
                     ></Route>
-                    <Route path="quiz" element={<Quiz />}></Route>
+                    <Route
+                        path="quiz"
+                        element={
+                            <Quiz
+                                name={name}
+                                questions={questions}
+                                score={score}
+                                setScore={setScore}
+                                setQuestions={setQuestions}
+                            />
+                        }
+                    ></Route>
                     <Route path="result" element={<Result />}></Route>
                 </Routes>
             </div>
