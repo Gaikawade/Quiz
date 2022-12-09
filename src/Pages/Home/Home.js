@@ -1,18 +1,16 @@
-import {
-    Button,
-    MenuItem,
-    TextField,
-} from "@mui/material";
+import { Button, MenuItem, TextField, } from "@mui/material";
 import { useState } from "react";
+import { useNavigate } from "react-router";
+import ErrorMessage from "../../Components/ErrorMessage/ErrorMessage";
 import Categories from "../../Data/Categories";
 import "./Home.css";
 
-const Home = ({ name, setName }) => {
+const Home = ({ name, setName, fetchQuestions }) => {
     const [category, setCategory] = useState("");
     const [difficulty, setDifficulty] = useState("");
     const [error, setError] = useState(false);
 
-    const history = useHistory()
+    const history = useNavigate();
 
     const handleSubmit = () => {
         if(!category || !difficulty || !name){
@@ -21,7 +19,7 @@ const Home = ({ name, setName }) => {
         } else {
             setError(false);
             fetchQuestions(category, difficulty);
-            history.push('/')
+            history('/quiz');
         }
     };
 
@@ -30,6 +28,7 @@ const Home = ({ name, setName }) => {
             <div className="settings">
                 <span style={{ fontSize: 30 }}>Quiz Settings</span>
                 <div className="settings_select">
+                    {error && <ErrorMessage>Please fill all the fields</ErrorMessage>}
                     <TextField
                         style={{ marginBottom: 25 }}
                         label="Enter Your Name"
